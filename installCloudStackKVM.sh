@@ -1,5 +1,5 @@
 #!/bin/bash
-# Script to prepare a virgin installation of Ubuntu 12.04 server for Cloudstack
+# Script to prepare a virgin installation of Ubuntu 12.10 server for Cloudstack
 # KVM node deployment
 #
 # Version 0.4, Gerry Havinga, January 2013
@@ -8,6 +8,7 @@
 # 0.2 - added extra echo statements to make output more eligible (still a mess)
 # 0.3 - Fixed wrong sed match
 # 0.4 - added function to edit qemu.conf and enable VNC console access from anywhere
+# 0.5 - Ubuntu 12.10LTS of course
 #
 # Ubuntu installed with defaults, "Basic Ubuntu server" and "OpenSSH server" software installed.
 
@@ -16,7 +17,7 @@ function init_vars ()
 	# Date
 	date=`date +%Y%m%d%H%M%S`
 	# Will only run on
-	SUPPORTED_UBUNTU=12.04TLS
+	SUPPORTED_UBUNTU=12.10TLS
 	# For basic netorking all hosts can be in the same subnet. Networks are isolated
 	# by specifying non-overlapping ranges of IP addresses.
 	# Set IP addressing:
