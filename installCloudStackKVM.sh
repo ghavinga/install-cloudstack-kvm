@@ -2,7 +2,7 @@
 # Script to prepare a virgin installation of Ubuntu 12.10 server for Cloudstack
 # KVM node deployment
 #
-# Version 0.1, Gerry Havinga
+# Version 0.2, Gerry Havinga, January 2013
 # 
 # Ubuntu installed with defaults, "Basic Ubuntu server" and "OpenSSH server" software installed.
 
@@ -87,7 +87,7 @@ function make_interfaces_bridges ()
 	echo "Making backup of interfaces... to /etc/network/interfaces.backup.$date"
 	cp /etc/network/interfaces /etc/network/interfaces.backup.$date
 	cat > /etc/network/interfaces << _EOF_
-The loopback network interface
+# The loopback network interface
 auto lo
 iface lo inet loopback
 
@@ -134,7 +134,7 @@ function make_interfaces ()
 	echo "Making backup of interfaces... to /etc/network/interfaces.backup.$date"
 	cp /etc/network/interfaces /etc/network/interfaces.backup.$date
 	cat > /etc/network/interfaces << _EOF_
-The loopback network interface
+# The loopback network interface
 auto lo
 iface lo inet loopback
 
@@ -256,7 +256,7 @@ mdns_adv = 0
 _EOF_
 	echo "Adjusting startup parameters for libvirt deamon."
 	cp /etc/init/libvirt-bin.conf /etc/init/libvirt-bin.conf.backup.$date
-	sed -i 's/libvirtd_opts="-d"/libvirtd_opts="-d -l"/g' /etc/init/libvirt-bin.conf.backup
+	sed -i 's/libvirtd_opts="-d"/libvirtd_opts="-d -l"/g' /etc/init/libvirt-bin.conf
 	echo "Restarting libvirt service..."
 	service libvirt-bin restart
 	echo " "
