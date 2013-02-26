@@ -1,9 +1,14 @@
 #!/bin/bash
-# Script to prepare a virgin installation of Ubuntu 12.10 server for Cloudstack
+# Script to prepare a virgin installation of Ubuntu 12.04 server for Cloudstack
 # KVM node deployment
 #
-# Version 0.2, Gerry Havinga, January 2013
+# Version 0.4, Gerry Havinga, January 2013
 # 
+# 0.1 - first attempt, not complete
+# 0.2 - added extra echo statements to make output more eligible (still a mess)
+# 0.3 - Fixed wrong sed match
+# 0.4 - added function to edit qemu.conf and enable VNC console access from anywhere
+#
 # Ubuntu installed with defaults, "Basic Ubuntu server" and "OpenSSH server" software installed.
 
 function init_vars ()
@@ -262,6 +267,15 @@ _EOF_
 	echo " "
 }
 
+function prepare_qemu ()
+{
+	echo "Adjusting vnc_listen = 0.0.0.0 in /etc/libvirt/qemu.conf. "
+	cp /etc/libvirt/qemu.conf /etc/libvirt/qemu.conf.backup.$date
+	sed -i 's/# vnc_listen = "0.0.0.0"/vnc_listen = "0.0.0.0"/g' /etc/libvirt/qemu.conf
+	service libvirt-bin restart
+}
+
+
 function prepare_apparmor ()
 {
 	dpkg --list 'apparmor'
@@ -297,6 +311,7 @@ ubuntu_update
 pre_install_checks
 install_cloudstack
 prepare_libvirt
+prepare_qemu 
 prepare_apparmor
 list_addresses
 echo "Recommend to re-boot the system."
